@@ -29,21 +29,21 @@ class Pais(models.Model):
     
 class Departamento(models.Model):
     nombre = models.CharField(max_length=100)
-    pais_id = models.ForeignKey(Pais, on_delete=models.SET_NULL, null=True)
+    pais_fk = models.ForeignKey(Pais, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"{self.nombre}"
 
 class Provincia(models.Model):
     nombre = models.CharField(max_length=100)
-    departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True)
+    departamento_fk = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"{self.nombre}"   
     
 class Distrito(models.Model):
     nombre = models.CharField(max_length=100)
-    provincia = models.ForeignKey(Provincia, on_delete=models.SET_NULL, null=True)
+    provincia_fk = models.ForeignKey(Provincia, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"{self.nombre}"   
@@ -51,7 +51,7 @@ class Distrito(models.Model):
 class Ubicacion(models.Model):
     direccion = models.CharField(max_length=150)
     referencia = models.CharField(max_length=150, blank=True, null=True)
-    distrito = models.ForeignKey(Distrito, on_delete=models.SET_NULL, null=True)
+    distrito_fk = models.ForeignKey(Distrito, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"{self.direccion}"    
@@ -60,19 +60,19 @@ class Ubicacion(models.Model):
 # MODULO NEGOCIO
 
 class Rubro(models.Model):
-    nombre_rubro = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.nombre_rubro
+        return self.nombre
     
 class Rol(models.Model):
-    nombre_rol = models.CharField(max_length=50, unique=True)
+    nombre = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return self.nombre_rol
+        return self.nombre
 
 class Negocio(models.Model):
-    pais = models.ForeignKey(Pais, on_delete=models.SET_NULL, null=True, blank=True)
+    pais_fk = models.ForeignKey(Pais, on_delete=models.SET_NULL, null=True, blank=True)
     nombre  = models.CharField(max_length=100)
     direccion = models.CharField(max_length=255, blank=True, null=True)
     RUC = models.CharField(max_length=32, blank=True, null=True)
@@ -87,15 +87,21 @@ class Negocio(models.Model):
         return self.nombre
     
 class UsuarioNegocio(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    negocio = models.ForeignKey(Negocio, on_delete=models.CASCADE)  # Asume que tienes un modelo 'Negocio'
-    rol = models.ForeignKey(Rol, on_delete=models.SET_NULL, null=True)  # Asume que tienes un modelo 'Rol'
+    usuario_fk = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    negocio_fk = models.ForeignKey(Negocio, on_delete=models.CASCADE)  # Asume que tienes un modelo 'Negocio'
+    rol_fk = models.ForeignKey(Rol, on_delete=models.SET_NULL, null=True)  # Asume que tienes un modelo 'Rol'
 
     def __str__(self):
-        return f'{self.usuario.nombre} ({self.negocio.nombre}: {self.rol})'
+        return f'{self.usuario_fk.nombre} ({self.negocio_fk.nombre}: {self.rol_fk.nombre})'
     
 
+
 # MODULO INVENTARIO
+class Marca(models.Model):
+    nombre = models.CharField(max_length=64)
+    
+    def __str__(self):
+        return f"{self.nombre}"
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
@@ -104,13 +110,13 @@ class Categoria(models.Model):
         return self.nombre
     
 class Proveedor(models.Model):
-    nombre_proveedor = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
     telefono = models.CharField(max_length=22, blank=True, null=True)
     correo = models.EmailField(max_length=100, blank=True, null=True)
     url = models.URLField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return self.nombre_proveedor
+        return self.nombre
 
 class Producto(models.Model):
     codigo = models.CharField(max_length=100, unique=True)
@@ -118,11 +124,11 @@ class Producto(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     costo = models.DecimalField(max_digits=10, decimal_places=2)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
     stock = models.PositiveIntegerField(blank=True, null=True)
     ubicacion = models.CharField(max_length=80, blank=True, null=True)
-    proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
-    negocio = models.ForeignKey(Negocio, on_delete=models.CASCADE)
+    categoria_fk = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
+    proveedor_fk = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
+    negocio_fk = models.ForeignKey(Negocio, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre 
@@ -134,7 +140,7 @@ class Imagen(models.Model):
 
     
 class ImagenProducto(Imagen):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    producto_fk = models.ForeignKey(Producto, on_delete=models.CASCADE)
     fecha_registro = models.DateTimeField(auto_now_add=True)
 
 
@@ -144,19 +150,11 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=64)
     apellido = models.CharField(max_length=64)
     telefono = models.CharField(max_length=22)  # Podría ser un campo de número de teléfono
-    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.SET_NULL, null=True)
+    ubicacion_fk = models.ForeignKey(Ubicacion, on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
-
-
-# MODULO INVENTARIO
-class Marca(models.Model):
-    nombre = models.CharField(max_length=64)
-    
-    def __str__(self):
-        return f"{self.nombre}"
 
 
 # VENTA
@@ -170,7 +168,7 @@ class EstadoVenta(models.Model):
     
     
 class Venta(models.Model):
-    estado = models.ForeignKey(EstadoVenta, on_delete=models.CASCADE)
+    estado_fk = models.ForeignKey(EstadoVenta, on_delete=models.CASCADE)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 

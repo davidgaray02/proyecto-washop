@@ -16,8 +16,6 @@ router.register('usuario-negocio', views.UsuarioNegocioViewSet)
 # MODULO INVENTARIO
 router.register('categoria', views.CategoriaViewSet)
 router.register('producto', views.ProductoViewSet)
-router.register('inventario', views.InventarioViewSet)
-
 
 # MODULO ARCHIVOS
 router.register('imagen', views.CategoriaViewSet)
