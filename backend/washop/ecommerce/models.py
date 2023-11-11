@@ -119,16 +119,119 @@ class Proveedor(models.Model):
         return self.nombre
 
 class Producto(models.Model):
-    codigo = models.CharField(max_length=100, unique=True)
+    codigo = models.CharField(max_length=100, unique=True, blank=True, null=True)
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField(blank=True, null=True)
-    costo = models.DecimalField(max_digits=10, decimal_places=2)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    costo = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    precio = models.DecimalField(max_digits=15, decimal_places=2)
     stock = models.PositiveIntegerField(blank=True, null=True)
     ubicacion = models.CharField(max_length=80, blank=True, null=True)
-    categoria_fk = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
-    proveedor_fk = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
+    categoria_fk = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
+    proveedor_fk = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True, blank=True)
     negocio_fk = models.ForeignKey(Negocio, on_delete=models.CASCADE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def __str__(self):
         return self.nombre 
