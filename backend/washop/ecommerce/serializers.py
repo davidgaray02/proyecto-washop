@@ -2,6 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from . import models #Importar todos los modelos desde la raiz del proyecto
 
+# MODULO USUARIOS
+
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Usuario  # O tu modelo de Usuario
