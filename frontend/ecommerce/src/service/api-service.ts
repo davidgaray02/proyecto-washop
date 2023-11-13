@@ -29,7 +29,7 @@ export class ApiServicio {
 
     // Método genérico para realizar una solicitud PUT
     public put<T>(endpoint: string, data: any): Observable<T> {
-        return this.http.put<T>(this.ApiUrl + endpoint, data, this.httpOptions);
+        return this.http.put<T>(this.ApiUrl + endpoint + '/', data, this.httpOptions);
     }
 
     // Método genérico para realizar una solicitud DELETE

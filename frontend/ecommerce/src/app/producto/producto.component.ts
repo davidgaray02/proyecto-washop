@@ -40,7 +40,7 @@ export class ProductoComponent implements OnInit {
   grabarProducto() {
     if (this.esNuevoProducto) {
       this.api.post<Producto>('producto/', this.nuevoProducto).subscribe((respuesta) => {
-        this.productos.push(respuesta); // Cambiado de 'usuarios' a 'productos'
+        this.productos.push(respuesta); 
       });
     } else {
       this.api.put<Producto>(`producto/${this.nuevoProducto.id}`, this.nuevoProducto).subscribe(() => {
@@ -55,20 +55,20 @@ export class ProductoComponent implements OnInit {
 
   obtenerProductos() {
     this.api.get<Producto[]>('producto').subscribe((respuesta) => {
-      this.productos = respuesta; // Cambiado de 'usuarios' a 'productos'
+      this.productos = respuesta; 
     });
   }
   
   eliminarProducto(productoId: number) {
 
     this.api.delete<void>(`producto/${productoId}`).subscribe(() => {
-      this.productos = this.productos.filter((p) => p.id !== productoId); // Cambiado de 'usuarios' a 'productos'
+      this.productos = this.productos.filter((p) => p.id !== productoId); 
     });
   }
 
   crearProducto(nuevoProducto: Producto) {
     this.api.post<Producto>('producto/', nuevoProducto).subscribe((respuesta) => {
-      this.productos.push(respuesta); // Cambiado de 'usuarios' a 'productos'
+      this.productos.push(respuesta); 
     });
   }
   

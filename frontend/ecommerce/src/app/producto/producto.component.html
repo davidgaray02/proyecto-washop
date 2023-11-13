@@ -1,4 +1,4 @@
-<h2>Lista de Productos</h2>
+<h2>Productos</h2>
 <p-button (click)="showCreateBox()" label="Nuevo Producto"></p-button>
 <p-table styleClass="p-datatable-striped" [value]="productos" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
@@ -43,19 +43,19 @@
 
     <p class="bolder">Nombre</p>
     <input type="text" pInputText [(ngModel)]="nuevoProducto.nombre" />
-    <p class="bolder">Descripción</p>
+    <p class="bolder">Descripción (opcional)</p>
     <input type="text" pInputText [(ngModel)]="nuevoProducto.descripcion" />
-    <p class="bolder">Costo</p>
+    <p class="bolder">Costo (opcional)</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.costo" />
     <p class="bolder">Precio</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.precio" />
-    <p class="bolder">Stock</p>
+    <p class="bolder">Stock (opcional)</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.stock" />
-    <p class="bolder">Ubicación</p>
+    <p class="bolder">Ubicación (opcional)</p>
     <input type="text" pInputText [(ngModel)]="nuevoProducto.ubicacion" />
-    <p class="bolder">Categoría_FK</p>
+    <p class="bolder">Categoría_FK (opcional)</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.categoria_fk" />
-    <p class="bolder">Proveedor_FK</p>
+    <p class="bolder">Proveedor_FK (opcional)</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.proveedor_fk" />
     <p class="bolder">Negocio_FK</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.negocio_fk" />
