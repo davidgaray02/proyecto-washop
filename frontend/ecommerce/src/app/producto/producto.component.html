@@ -48,22 +48,22 @@
     <input type="text" pInputText [(ngModel)]="nuevoProducto.descripcion" />
     
     <p class="bolder">Costo (opcional)</p>
-    <input type="number" pInputText [(ngModel)]="nuevoProducto.costo" />
+    <input type="number" [min]="0" pInputText [(ngModel)]="nuevoProducto.costo" />
     
     <p class="bolder">Precio</p>
-    <input type="number" pInputText [(ngModel)]="nuevoProducto.precio" />
+    <input type="number" [min]="0" pInputText [(ngModel)]="nuevoProducto.precio" />
     
     <p class="bolder">Stock (opcional)</p>
-    <input type="number" pInputText [(ngModel)]="nuevoProducto.stock" />
+    <input type="number" [min]="0" pInputText [(ngModel)]="nuevoProducto.stock" />
     
     <p class="bolder">Ubicación (opcional)</p>
     <input type="text" pInputText [(ngModel)]="nuevoProducto.ubicacion" />
     
     <p class="bolder">Categoría (opcional)</p>
-    <p-dropdown [options]="categorias" [(ngModel)]="categoriaSeleccionada" optionLabel="nombre" [showClear]="false" placeholder="Selecciona una categoría"></p-dropdown>
+    <p-dropdown [options]="categorias" [(ngModel)]="categoriaSeleccionada" optionLabel="nombre" [showClear]="true" placeholder="Selecciona una categoría"></p-dropdown>
     
     <p class="bolder">Proveedor (opcional)</p>
-    <p-dropdown [options]="proveedores" [(ngModel)]="proveedorSeleccionado" optionLabel="nombre" [showClear]="false" placeholder="Selecciona una categoría"></p-dropdown>
+    <p-dropdown [options]="proveedores" [(ngModel)]="proveedorSeleccionado" optionLabel="nombre" [showClear]="true" placeholder="Selecciona una categoría"></p-dropdown>
 
     <p class="bolder">Negocio</p>
     <p-dropdown [options]="negocios" [(ngModel)]="negocioSeleccionado" optionLabel="nombre" [showClear]="false" placeholder="Selecciona una categoría"></p-dropdown>

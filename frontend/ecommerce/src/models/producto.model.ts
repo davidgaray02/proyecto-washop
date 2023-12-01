@@ -7,8 +7,8 @@ export class Producto {
     precio: number;
     stock: number;
     ubicacion: string;
-    categoria_fk: number;
-    proveedor_fk: number;
+    categoria_fk: number | null;
+    proveedor_fk: number | null;
     negocio_fk: number;
     categoria_nombre: string;
     proveedor_nombre: string;
