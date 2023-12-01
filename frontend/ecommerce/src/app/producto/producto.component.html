@@ -1,5 +1,5 @@
 <h2>Productos</h2>
-<p-button (click)="showCreateBox()" label="Nuevo Producto"></p-button>
+<p-button (click)="showCreateBox()" label="Nuevo Producto" class="margin-buttom"></p-button>
 <p-table styleClass="p-datatable-striped" [value]="productos" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
@@ -9,11 +9,11 @@
             <th pSortableColumn="costo">Costo <p-sortIcon field="costo"></p-sortIcon></th>
             <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
             <th pSortableColumn="stock">Stock <p-sortIcon field="stock"></p-sortIcon></th>
-            <th>Ubicación></th>
-            <th pSortableColumn="categoria_fk">Categoría <p-sortIcon field="categoria_fk"></p-sortIcon></th>
-            <th>Proveedor <p-sortIcon field="proveedor_fk"></p-sortIcon></th>
-            <th pSortableColumn="negocio_fk">Negocio <p-sortIcon field="negocio_fk"></p-sortIcon></th>
-            <th>Acciones</th>
+            <th>Ubicación</th>
+            <th pSortableColumn="categoria_nombre">Categoría <p-sortIcon></p-sortIcon></th>
+            <th pSortableColumn="proveedor_nombre">Proveedor <p-sortIcon></p-sortIcon></th>
+            <th pSortableColumn="negocio_nombre">Negocio <p-sortIcon></p-sortIcon></th>
+            <th >Acciones</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-producto>
@@ -25,12 +25,12 @@
             <td>{{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
             <td>{{ producto.ubicacion }}</td>
-            <td>{{ producto.categoria_fk }}</td>
-            <td>{{ producto.proveedor_fk }}</td>
-            <td>{{ producto.negocio_fk }}</td>
-            <td>
-                <p-button (click)="eliminarProducto(producto.id)" icon="pi pi-trash"></p-button>&nbsp;
-                <p-button (click)="showEditBox(producto)" icon="pi pi-pencil"></p-button>
+            <td>{{ producto.categoria_nombre }}</td>
+            <td>{{ producto.proveedor_nombre }}</td>
+            <td>{{ producto.negocio_nombre }}</td>
+            <td >
+                <p-button styleClass="p-button-secondary" (click)="showEditBox(producto)" icon="pi pi-pencil"></p-button>
+                <p-button styleClass="p-button-danger" (click)="eliminarProducto(producto.id)" icon="pi pi-trash"></p-button>
             </td>
         </tr>
     </ng-template>
@@ -43,27 +43,36 @@
 
     <p class="bolder">Nombre</p>
     <input type="text" pInputText [(ngModel)]="nuevoProducto.nombre" />
+    
     <p class="bolder">Descripción (opcional)</p>
     <input type="text" pInputText [(ngModel)]="nuevoProducto.descripcion" />
+    
     <p class="bolder">Costo (opcional)</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.costo" />
+    
     <p class="bolder">Precio</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.precio" />
+    
     <p class="bolder">Stock (opcional)</p>
     <input type="number" pInputText [(ngModel)]="nuevoProducto.stock" />
+    
     <p class="bolder">Ubicación (opcional)</p>
     <input type="text" pInputText [(ngModel)]="nuevoProducto.ubicacion" />
-    <p class="bolder">Categoría_FK (opcional)</p>
-    <input type="number" pInputText [(ngModel)]="nuevoProducto.categoria_fk" />
-    <p class="bolder">Proveedor_FK (opcional)</p>
-    <input type="number" pInputText [(ngModel)]="nuevoProducto.proveedor_fk" />
-    <p class="bolder">Negocio_FK</p>
-    <input type="number" pInputText [(ngModel)]="nuevoProducto.negocio_fk" />
+    
+    <p class="bolder">Categoría (opcional)</p>
+    <p-dropdown [options]="categorias" [(ngModel)]="categoriaSeleccionada" optionLabel="nombre" [showClear]="false" placeholder="Selecciona una categoría"></p-dropdown>
+    
+    <p class="bolder">Proveedor (opcional)</p>
+    <p-dropdown [options]="proveedores" [(ngModel)]="proveedorSeleccionado" optionLabel="nombre" [showClear]="false" placeholder="Selecciona una categoría"></p-dropdown>
+
+    <p class="bolder">Negocio</p>
+    <p-dropdown [options]="negocios" [(ngModel)]="negocioSeleccionado" optionLabel="nombre" [showClear]="false" placeholder="Selecciona una categoría"></p-dropdown>
 
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="grabarProducto()" label="Guardar" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="grabarProducto()" label="Guardar" styleClass="p-button-primary"></p-button>
     </ng-template>
 </p-dialog>
 
+
 <p-toast></p-toast>
-<p-confirmDialog [style]="{width: '32vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '30vw'}"></p-confirmDialog>

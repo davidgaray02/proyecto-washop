@@ -45,10 +45,13 @@ class ProveedorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductoSerializer(serializers.ModelSerializer):
-    categoria_nombre = serializers.ReadOnlyField(source='categoria.nombre')
     class Meta:
         model = models.Producto  
         fields = '__all__'
+    
+    categoria_nombre = serializers.ReadOnlyField(source='categoria_fk.nombre')
+    proveedor_nombre = serializers.ReadOnlyField(source='proveedor_fk.nombre')
+    negocio_nombre = serializers.ReadOnlyField(source='negocio_fk.nombre')
 
 # MODULO CLIENTE
 

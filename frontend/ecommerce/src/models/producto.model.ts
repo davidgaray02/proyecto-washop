@@ -10,4 +10,7 @@ export class Producto {
     categoria_fk: number;
     proveedor_fk: number;
     negocio_fk: number;
+    categoria_nombre: string;
+    proveedor_nombre: string;
+    negocio_nombre: string;
 }

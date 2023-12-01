@@ -19,8 +19,8 @@ router.register('categoria', views.CategoriaViewSet)
 router.register('producto', views.ProductoViewSet)
 
 # MODULO ARCHIVOS
-router.register('imagen', views.CategoriaViewSet)
-router.register('imagen-producto', views.NegocioViewSet)
+router.register('imagen', views.ImagenViewSet)
+router.register('imagen-producto', views.ImagenProductoViewSet)
 
 
 

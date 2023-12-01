@@ -1,7 +1,8 @@
 from django.db import models
+#from django.contrib.auth.models import AbstractUser
+
 
 # MODULO USUARIO
-
 class Usuario(models.Model):
     nombre = models.CharField(max_length=64)
     apellido = models.CharField(max_length=64)
@@ -15,6 +16,7 @@ class Usuario(models.Model):
     def __str__(self):
         return f'{self.nombre} {self.apellido}'
     
+
     
 
 # MODULO LOCALIZACIONES

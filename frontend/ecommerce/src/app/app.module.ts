@@ -12,12 +12,14 @@ import { ProductoComponent } from './producto/producto.component';
 
 // PRIME NG MODULES
 import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+
 
 
 
@@ -38,7 +40,8 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     InputNumberModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
