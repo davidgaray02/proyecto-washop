@@ -1,13 +1,13 @@
 <h2>Productos</h2>
-<p-button (click)="showCreateBox()" label="Nuevo Producto" class="margin-buttom"></p-button>
+<p-button icon="pi pi-plus" (click)="showCreateBox()" label="Nuevo" class="margin-buttom"></p-button>
 <p-table styleClass="p-datatable-striped" [value]="productos" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
             <th>ID</th>
             <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
             <th>Descripción</th>
-            <th pSortableColumn="costo">Costo <p-sortIcon field="costo"></p-sortIcon></th>
-            <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
+            <th pSortableColumn="costo">Compra <p-sortIcon field="costo"></p-sortIcon></th>
+            <th pSortableColumn="precio">Venta <p-sortIcon field="precio"></p-sortIcon></th>
             <th pSortableColumn="stock">Stock <p-sortIcon field="stock"></p-sortIcon></th>
             <th>Ubicación</th>
             <th pSortableColumn="categoria_nombre">Categoría <p-sortIcon></p-sortIcon></th>
@@ -21,8 +21,8 @@
             <td>{{ producto.id }}</td>
             <td>{{ producto.nombre }}</td>
             <td>{{ producto.descripcion }}</td>
-            <td>{{ producto.costo }}</td>
-            <td>{{ producto.precio }}</td>
+            <td>S/ {{ producto.costo }}</td>
+            <td>S/ {{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
             <td>{{ producto.ubicacion }}</td>
             <td>{{ producto.categoria_nombre }}</td>
@@ -36,37 +36,70 @@
     </ng-template>
 </p-table>
 
-<p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-    <ng-template pTemplate="header">
-        <span class="text-xl font-bold bolder">Datos del Producto</span>
-    </ng-template>
+<p-dialog header="Datos del producto" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [maximizable]="true">
 
-    <p class="bolder">Nombre</p>
-    <input type="text" pInputText [(ngModel)]="nuevoProducto.nombre" />
-    
-    <p class="bolder">Descripción (opcional)</p>
-    <input type="text" pInputText [(ngModel)]="nuevoProducto.descripcion" />
-    
-    <p class="bolder">Costo (opcional)</p>
-    <input type="number" [min]="0" pInputText [(ngModel)]="nuevoProducto.costo" />
-    
-    <p class="bolder">Precio</p>
-    <input type="number" [min]="0" pInputText [(ngModel)]="nuevoProducto.precio" />
-    
-    <p class="bolder">Stock (opcional)</p>
-    <input type="number" [min]="0" pInputText [(ngModel)]="nuevoProducto.stock" />
-    
-    <p class="bolder">Ubicación (opcional)</p>
-    <input type="text" pInputText [(ngModel)]="nuevoProducto.ubicacion" />
-    
-    <p class="bolder">Categoría (opcional)</p>
-    <p-dropdown [options]="categorias" [(ngModel)]="categoriaSeleccionada" optionLabel="nombre" [showClear]="true" placeholder="Selecciona una categoría"></p-dropdown>
-    
-    <p class="bolder">Proveedor (opcional)</p>
-    <p-dropdown [options]="proveedores" [(ngModel)]="proveedorSeleccionado" optionLabel="nombre" [showClear]="true" placeholder="Selecciona una categoría"></p-dropdown>
+    <div class="field p-fluid mt-4">
+        <div class="flex-container">
+            <div class="full-width">
+                <p for="nombre" class="bolder">Nombre</p>
+                <input type="text" id="nombre" [autofocus]="true" pInputText [(ngModel)]="nuevoProducto.nombre" />
+                <small *ngIf="intentoGuardar && !nuevoProducto.nombre" id="nombre" class="p-error"> <i class="pi pi-chevron-up" style="color: hsl(355, 66%, 71%)"></i> Campo obligatorio</small>
+            </div>
+            <div class="full-width">
+                <p for="categoria" class="bolder">Categoría</p>
+                <p-dropdown id="categoria" [filter]="true" filterBy="nombre" [options]="categorias" [(ngModel)]="categoriaSeleccionada" optionLabel="nombre" [showClear]="true" placeholder="Seleccionar"></p-dropdown>
+            </div>
+        </div>
+    </div>
 
-    <p class="bolder">Negocio</p>
-    <p-dropdown [options]="negocios" [(ngModel)]="negocioSeleccionado" optionLabel="nombre" [showClear]="false" placeholder="Selecciona una categoría"></p-dropdown>
+            
+    <div class="field p-fluid mt-4">
+        <p for="descripcion" class="bolder">Descripción</p>
+        <textarea id="descripcion" rows="5" pInputTextarea [autoResize]="true" [(ngModel)]="nuevoProducto.descripcion" placeholder="Detalla las características y beneficios del producto"></textarea>
+    </div>
+    
+    <div class="field p-fluid mt-4">
+        <div class="flex-container">
+            <div class="full-width">
+                <p for="precio-compra" class="bolder">Precio de compra</p>
+                <p-inputNumber id="precio-compra" prefix="S/ " [min]="2" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" [useGrouping]="false" [(ngModel)]="nuevoProducto.costo"></p-inputNumber>
+            </div>
+            <div class="full-width">
+                <p for="precio-venta" class="bolder">Precio de venta</p>
+                <p-inputNumber id="precio-venta" prefix="S/ " [min]="2" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" [useGrouping]="false" [(ngModel)]="nuevoProducto.precio"></p-inputNumber>
+                <small *ngIf="intentoGuardar && !nuevoProducto.precio" id="precio-venta" class="p-error"> <i class="pi pi-chevron-up" style="color: hsl(355, 66%, 71%)"></i> Campo obligatorio</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="field p-fluid mt-4">
+        <div class="flex-container">
+            <div class="full-width">
+                <p for="stock" class="bolder">Stock</p>
+                <input id="stock" type="number" [min]="0" pInputText [(ngModel)]="nuevoProducto.stock" />
+            </div>
+            <div class="full-width">
+                <p for="ubicacion" class="bolder">Ubicación</p>
+                <input id="ubicacion" type="text" pInputText [(ngModel)]="nuevoProducto.ubicacion" />
+            </div>
+        </div>
+    </div>
+
+    <div class="field p-fluid mt-4">
+        <div class="flex-container">
+            <div class="full-width">
+                <p for="proveedor" class="bolder">Proveedor</p>
+                <p-dropdown id="proveedor"  [filter]="true" filterBy="nombre" [options]="proveedores" [(ngModel)]="proveedorSeleccionado" optionLabel="nombre" [showClear]="true" placeholder="Seleccionar"></p-dropdown>
+            </div>
+
+            <div class="full-width">
+                <p for="negocio" class="bolder">Negocio</p>
+                <p-dropdown id="negocio"  [filter]="true" filterBy="nombre" [options]="negocios" appendTo="body" [(ngModel)]="negocioSeleccionado" optionLabel="nombre" [showClear]="false" placeholder="Seleccionar"></p-dropdown>
+                <small *ngIf="intentoGuardar && !nuevoProducto.negocio_fk" id="negocio" class="p-error"> <i class="pi pi-chevron-up" style="color: hsl(355, 66%, 71%)"></i> Campo obligatorio</small>
+            </div>
+        </div>
+    </div>
+    <br>
 
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="grabarProducto()" label="Guardar" styleClass="p-button-primary"></p-button>

@@ -19,6 +19,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+
+
 
 
 
@@ -41,7 +44,9 @@ import { ToastModule } from 'primeng/toast';
     InputNumberModule,
     ConfirmDialogModule,
     ToastModule,
-    DropdownModule
+    DropdownModule,
+    InputTextareaModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

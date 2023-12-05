@@ -1,4 +1,6 @@
   import { Component, OnInit } from '@angular/core';
+  import { InputNumberModule } from 'primeng/inputnumber';
+
 
   import { Producto } from 'src/models/producto.model'; 
   import { Categoria } from 'src/models/categoria.model'; 
@@ -21,6 +23,8 @@
     nuevoProducto: Producto = new Producto();
     esNuevoProducto: boolean;
     visible: boolean = false;
+
+    intentoGuardar: boolean = false;
 
     categorias: Categoria[];
     categoriaSeleccionada: Categoria | null | undefined;
@@ -49,6 +53,8 @@
       this.categoriaSeleccionada = new Categoria();
       this.proveedorSeleccionado = new Proveedor();
       this.negocioSeleccionado = new Negocio();
+
+      this.nuevoProducto.descripcion = "";
     }
 
     showEditBox(producto: Producto) {
@@ -70,22 +76,29 @@
 
     grabarProducto() {
       
+      if (this.categoriaSeleccionada === undefined || this.categoriaSeleccionada === null) {
+        this.nuevoProducto.categoria_fk = null;
+      } else {
+        this.nuevoProducto.categoria_fk = this.categoriaSeleccionada.id;
+      }
+
+      if (this.proveedorSeleccionado === undefined || this.proveedorSeleccionado === null) {
+        this.nuevoProducto.proveedor_fk = null;
+      } else {
+        this.nuevoProducto.proveedor_fk = this.proveedorSeleccionado.id;
+      }
+
+      this.nuevoProducto.negocio_nombre = this.negocioSeleccionado.nombre;
+      this.nuevoProducto.negocio_fk = this.negocioSeleccionado.id;
+
+      this.intentoGuardar = true;
+
+      if (!this.nuevoProducto.nombre || !this.nuevoProducto.precio || !this.nuevoProducto.negocio_fk) {
+        return;
+      }
+
+      
       if (this.esNuevoProducto) {
-
-        if (this.categoriaSeleccionada === undefined || this.categoriaSeleccionada === null) {
-          this.nuevoProducto.categoria_fk = null;
-        } else {
-          this.nuevoProducto.categoria_fk = this.categoriaSeleccionada.id;
-        }
-
-        if (this.proveedorSeleccionado === undefined || this.proveedorSeleccionado === null) {
-          this.nuevoProducto.proveedor_fk = null;
-        } else {
-          this.nuevoProducto.proveedor_fk = this.proveedorSeleccionado.id;
-        }
-
-        this.nuevoProducto.negocio_nombre = this.negocioSeleccionado.nombre;
-        this.nuevoProducto.negocio_fk = this.negocioSeleccionado.id;
 
         this.api.post<Producto>('producto/', this.nuevoProducto).subscribe((respuesta) => {
           this.productos.push(respuesta); 
@@ -93,21 +106,6 @@
         });
       } else {
 
-        if (this.categoriaSeleccionada === undefined || this.categoriaSeleccionada === null) {
-          this.nuevoProducto.categoria_fk = null;
-        } else {
-          this.nuevoProducto.categoria_fk = this.categoriaSeleccionada.id;
-        }
-
-        if (this.proveedorSeleccionado === undefined || this.proveedorSeleccionado === null) {
-          this.nuevoProducto.proveedor_fk = null;
-        } else {
-          this.nuevoProducto.proveedor_fk = this.proveedorSeleccionado.id;
-        }
-
-        this.nuevoProducto.negocio_nombre = this.negocioSeleccionado.nombre;
-        this.nuevoProducto.negocio_fk = this.negocioSeleccionado.id;
-    
 
         this.api.put<Producto>(`producto/${this.nuevoProducto.id}`, this.nuevoProducto).subscribe(() => {
           this.obtenerProductos();
@@ -115,7 +113,10 @@
       }
 
       console.log(this.nuevoProducto)
+      
       this.visible = false;
+      this.intentoGuardar = false;
+
     }
 
     obtenerProductos() {
